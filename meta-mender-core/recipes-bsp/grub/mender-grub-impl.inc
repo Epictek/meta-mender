@@ -1,22 +1,23 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 require grub-mender.inc
 
 inherit deploy
 
-SRC_URI_append_mender-bios = " file://bios-cfg"
+SRC_URI:append:mender-bios = " file://bios-cfg"
 
-GRUB_TARGET_x86 = "i386-pc"
-GRUB_TARGET_x86-64 = "i386-pc"
+GRUB_TARGET:x86 = "i386-pc"
+GRUB_TARGET:x86-64 = "i386-pc"
 
 # Taken from poky's grub-efi, and removed efi part.
 GRUB_BUILDIN ?= "boot linux ext2 fat serial part_msdos part_gpt normal \
                  iso9660 configfile search loadenv test"
 
-GRUB_BUILDIN_append_mender-bios = " biosdisk"
+GRUB_BUILDIN:append:mender-bios = " biosdisk"
 
 # Needed to use grub-mkimage
-DEPENDS_append = " grub-efi-native"
+# causes cirucular dependency
+#DEPENDS:append = " grub-efi-native"
 
 
 python do_setcorelocation () {

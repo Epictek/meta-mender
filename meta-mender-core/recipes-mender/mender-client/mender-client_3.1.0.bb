@@ -28,4 +28,13 @@ LIC_FILES_CHKSUM = "file://src/github.com/mendersoftware/mender/LIC_FILES_CHKSUM
 LICENSE = "Apache-2.0 & BSD-2-Clause & BSD-3-Clause & ISC & MIT & OLDAP-2.8 & OpenSSL"
 
 DEPENDS += "xz openssl"
-RDEPENDS_${PN} += "liblzma openssl"
+RDEPENDS:${PN} += "liblzma openssl"
+
+
+do_compile:prepend() {
+    # The go build seems to download extra things after the preliminary bitbake instgated fetch which makes
+    # patching in the usual way impossible.
+    rm -f ${S}/src/github.com/mendersoftware/mender/vendor/github.com/mendersoftware/openssl/fips.go
+    sed -i 's/C.uchar)(chost)/C.char)(chost)/g' ${S}/src/github.com/mendersoftware/mender/vendor/github.com/mendersoftware/openssl/hostname.go
+    sed -i 's/C.uchar)(cemail)/C.char)(cemail)/g' ${S}/src/github.com/mendersoftware/mender/vendor/github.com/mendersoftware/openssl/hostname.go
+}
