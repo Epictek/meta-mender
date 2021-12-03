@@ -178,6 +178,20 @@ index af2189b8fe..9361193dae 100644
 +CONFIG_ENV_OFFSET=0x800000
 +CONFIG_ENV_OFFSET_REDUND=0x1000000
 +CONFIG_SYS_REDUNDAND_ENVIRONMENT=y
+diff --git a/env/Kconfig b/env/Kconfig
+￼index ed12609f6a..e83c62f6f6 100644
+￼index 38e7fadbb9..9b27ce042a 100644
+￼--- a/env/Kconfig
+￼+++ b/env/Kconfig
+￼@@ -49,7 +49,6 @@ config ENV_IS_IN_EEPROM
+￼@@ -55,7 +55,6 @@ config ENV_IS_IN_EEPROM
+￼ config ENV_IS_IN_FAT
+￼ 	bool "Environment is in a FAT filesystem"
+￼ 	depends on !CHAIN_OF_TRUST
+-	default y if ARCH_BCM283X
+ 	default y if ARCH_SUNXI && MMC
+￼ 	default y if MMC_OMAP_HS && TI_COMMON_CMD_OPTIONS
+￼ 	select FS_FAT
 diff --git a/include/configs/rpi.h b/include/configs/rpi.h
 index 522b41c02d..b08b471b12 100644
 --- a/include/configs/rpi.h
